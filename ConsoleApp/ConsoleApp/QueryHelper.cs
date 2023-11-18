@@ -19,7 +19,18 @@ public class QueryHelper : IQueryHelper
     /// <summary>
     /// Get DeliveriesShortInfo from deliveries of specified client
     /// </summary>
-    public IEnumerable<DeliveryShortInfo> DeliveryInfosByClient(IEnumerable<Delivery> deliveries, string clientId) => new List<DeliveryShortInfo>(); //TODO: Завдання 3
+    public IEnumerable<DeliveryShortInfo> DeliveryInfosByClient(IEnumerable<Delivery> deliveries, string clientId) => deliveries.Where(d=>d.ClientId==clientId).Select(d=>new DeliveryShortInfo()
+    {
+        ArrivalPeriod = d.ArrivalPeriod,
+        CargoType = d.CargoType,
+        ClientId = clientId,
+        StartCity = d.Direction.Origin.City,
+        EndCity = d.Direction.Destination.City,
+        Id = d.Id,
+        LoadingPeriod = d.LoadingPeriod,
+        Status = d.Status,
+        Type = d.Type
+    }); //TODO: Завдання 3
     
     /// <summary>
     /// Get first ten Deliveries that starts at specified city and have specified type
